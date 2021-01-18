@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/comics/static/css/main.af306220.chunk.css",
+    "main.css": "/comics/static/css/main.62f1b77b.chunk.css",
     "main.js": "/comics/static/js/main.eab9ffd1.chunk.js",
     "main.js.map": "/comics/static/js/main.eab9ffd1.chunk.js.map",
     "runtime-main.js": "/comics/static/js/runtime-main.8b66a11e.js",
@@ -8,13 +8,13 @@
     "static/js/2.08f85cd1.chunk.js": "/comics/static/js/2.08f85cd1.chunk.js",
     "static/js/2.08f85cd1.chunk.js.map": "/comics/static/js/2.08f85cd1.chunk.js.map",
     "index.html": "/comics/index.html",
-    "static/css/main.af306220.chunk.css.map": "/comics/static/css/main.af306220.chunk.css.map",
+    "static/css/main.62f1b77b.chunk.css.map": "/comics/static/css/main.62f1b77b.chunk.css.map",
     "static/js/2.08f85cd1.chunk.js.LICENSE.txt": "/comics/static/js/2.08f85cd1.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.8b66a11e.js",
     "static/js/2.08f85cd1.chunk.js",
-    "static/css/main.af306220.chunk.css",
+    "static/css/main.62f1b77b.chunk.css",
     "static/js/main.eab9ffd1.chunk.js"
   ]
 }
