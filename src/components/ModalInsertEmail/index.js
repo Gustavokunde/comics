@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import ModalAlert from "../ModalAlert";
 import sendEmail from "../../services/sendEmail";
 import "./styles.scss";
 import { FaSpinner } from "react-icons/fa";
@@ -10,6 +9,7 @@ function ModalInsertEmail({ sendEmailData, closeModal }) {
   const [email, setEmail] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
   const sendEmailContent = async () => {
     setLoading(true);
 
@@ -79,7 +79,7 @@ function ModalInsertEmail({ sendEmailData, closeModal }) {
 
   return (
     <div className="overlay">
-      <div className="container-modal-email">
+      <div className="container-modal">
         <AiOutlineClose size={20} onClick={closeModal} />
         <h2> Por favor, digite os campos abaixo: </h2>
         <input
