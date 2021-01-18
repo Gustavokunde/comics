@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , InputHTMLAttributes} from "react";
+import IComic from '../../models/comics';
 import { AiOutlineClose } from "react-icons/ai";
 import sendEmail from "../../services/sendEmail";
 import "./styles.scss";
 import { FaSpinner } from "react-icons/fa";
 
-function ModalInsertEmail({ sendEmailData, closeModal }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [alertMessage, setAlertMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+
+interface InputProps extends InputHTMLAttributes<HTMLInputElement>{
+  sendEmailData?:IComic[],
+  closeModal?:Function | any
+}
+
+const ModalInsertEmail : React.FC<InputProps> = ({ sendEmailData, closeModal })  => {
+  
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [alertMessage, setAlertMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const sendEmailContent = async () => {
     setLoading(true);
@@ -42,11 +50,11 @@ function ModalInsertEmail({ sendEmailData, closeModal }) {
   };
 
   const generateTemplateHTML = () => {
-    return sendEmailData.map(
-      (comic) =>
+    return sendEmailData?.map(
+      (comic:IComic) =>
         `<div>
-        <img style="height:300px" src=${comic.thumbnail.path}.${
-          comic.thumbnail.extension
+        <img style="height:300px" src=${comic?.thumbnail?.path}.${
+          comic?.thumbnail?.extension
         }>
       
     </div>
@@ -67,7 +75,7 @@ function ModalInsertEmail({ sendEmailData, closeModal }) {
     );
   };
 
-  const escFunction = (event) => {
+  const escFunction = (event : any) => {
     if (event.keyCode === 27) {
       closeModal();
     }

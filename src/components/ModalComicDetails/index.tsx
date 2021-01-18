@@ -1,9 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, InputHTMLAttributes } from "react";
+import IComic from '../../models/comics';
 import { AiOutlineClose } from "react-icons/ai";
 import "./styles.scss";
 
-function Modal({ comicDetails, closeModal }) {
-  const escFunction = (event) => {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement>{
+  comicDetails?:IComic | undefined,
+  closeModal?:Function | any,
+}
+
+
+const Modal : React.FC<InputProps> =  ({ comicDetails, closeModal }) => {
+  const escFunction = (event : any) => {
     if (event.keyCode === 27) {
       closeModal();
     }
@@ -15,12 +22,12 @@ function Modal({ comicDetails, closeModal }) {
 
   return (
     <> 
-      {comicDetails.image && (
+      {comicDetails?.image && (
         <div className="overlay">
           <div className="container-modal-details">
             <div className="image-detail">
               <img
-                src={comicDetails.image}
+                src={comicDetails?.image}
                 alt="ilustrative image of choosen comic"
               />
             </div>
@@ -34,15 +41,15 @@ function Modal({ comicDetails, closeModal }) {
                     (creator, index) =>
                       index < 15 && (
                         <span key={creator.name}>
-                          {index} - {creator.role}
+                          {creator.name} - {creator.role}
                         </span>
                       )
                   )}
               </p>
               <h3> Custos:</h3>
               <p>
-                {comicDetails.prices &&
-                  comicDetails.prices.map(
+                {comicDetails?.prices &&
+                  comicDetails?.prices?.map(
                     (price, index) =>
                       index < 10 && (
                         <span key={index}>
@@ -52,7 +59,7 @@ function Modal({ comicDetails, closeModal }) {
                             ? "Preço de digitalização"
                             : price.type}{" "}
                           -{" "}
-                          {price.price.toLocaleString("en-us", {
+                          {price?.price?.toLocaleString("en-us", {
                             style: "currency",
                             currency: "USD",
                           })}

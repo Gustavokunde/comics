@@ -8,21 +8,29 @@ import ModalInsertEmail from "../../components/ModalInsertEmail";
 import Mask from "../../Icons/Mask";
 import "./styles.scss";
 import ModalAlert from "../../components/ModalAlert";
+import IComic from "../../models/comics";
 
-function ComicsList() {
-  const [comics, setComics] = useState([]);
-  const [lovedComics, setLovedComics] = useState([]);
-  const [classShowButton, setClassShowButton] = useState("");
-  const [selectedComic, setSelectedComic] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [alertMessage, setAlertMessage] = useState(false);
+
+interface IShowObject {
+  class?:string,
+  index?:number
+}
+
+
+const  ComicsList: React.FC = () => {
+  const [comics, setComics] = useState<IComic[]>([]);
+  const [lovedComics, setLovedComics] = useState<IComic[]>([]);
+  const [classShowButton, setClassShowButton] = useState<IShowObject | undefined>();
+  const [selectedComic, setSelectedComic] = useState<IComic | undefined>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>("");
 
   const ts = new Date().getTime();
   const publicKey = "a9c872e621bea639063b886de6f2a77a";
   const privateKey = CryptoJS.MD5(
     ts + "4f7fa7d20c0f3a139e6da96d2098a87a8e26647f" + publicKey
   ).toString();
-  const [email, setEmail] = useState(false);
+  const [email, setEmail] = useState<boolean>(false);
 
   useEffect(() => {
     loadComics();
@@ -38,20 +46,32 @@ function ComicsList() {
       .get(
         `/comics?limit=${99}&offset=${100}&ts=${ts}&apikey=${publicKey}&hash=${privateKey}`
       )
-      .then((response) => {
-        setComics(response.data.data.results);
-      });
+      .then(
+        (response) => {
+          if (response.data && response.data.data)
+            setComics(response.data.data.results);
+          else
+            setAlertMessage(
+              "Ocorreu um erro com o serviço, por favor tente novamente mais tarde."
+            );
+        },
+        (error) => {
+          setAlertMessage(
+            "Ocorreu um erro com o serviço, por favor tente novamente mais tarde."
+          );
+        }
+      );
 
     setLoading(false);
   };
 
-  const showComicDetails = (comic) => {
-    comic.image = `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
+  const showComicDetails = (comic: IComic) => {
+    comic.image = `${comic?.thumbnail?.path}.${comic?.thumbnail?.extension}`;
     setSelectedComic(comic);
   };
 
   const closeModal = () => {
-    setSelectedComic({});
+    setSelectedComic(undefined);
   };
 
   const closeModalEmail = () => {
@@ -59,25 +79,24 @@ function ComicsList() {
   };
 
   const closeModalAlert = () => {
-    setAlertMessage(false);
+    setAlertMessage('');
   };
 
-  const loveComic = (comic) => {
+  const loveComic = (comic: IComic) => {
     const icon = document.getElementById("icon-love" + comic.id);
     const card = document.getElementById("card" + comic.id);
     const comicIsLoved = lovedComics.find((com) => comic.id === com.id);
 
     if (!comicIsLoved) {
       setLovedComics([...lovedComics, comic]);
-      icon.classList.add("selected");
-      card.classList.add("selected");
+      icon?.classList.add("selected");
+      card?.classList.add("selected");
     } else {
       setLovedComics(lovedComics.filter((item) => item.id !== comic.id));
-      icon.classList.remove("selected");
-      card.classList.remove("selected");
+      icon?.classList.remove("selected");
+      card?.classList.remove("selected");
     }
   };
-
 
   return (
     <div className="container-list">
@@ -89,21 +108,20 @@ function ComicsList() {
         />
       )}
       {alertMessage && (
-        <ModalAlert
-          message={alertMessage}
-          closeModal={closeModalAlert}
-        />
+        <ModalAlert message={alertMessage} closeModal={closeModalAlert} />
       )}
-      <h1>
-        {"Escolha as suas HQs preferidas e as envie por e-mail".toUpperCase()}{" "}
-      </h1>
+      <h1>FAVORITE SUAS HQS</h1>
+
+      <p>
+        {"Clique no coração dentro da imagem para salvar suas HQs favoritas. Em seguida adicione seu e-mail no ícone abaixo para recebê-las.".toUpperCase()}{" "}
+      </p>
       {loading ? (
         <FaSpinner id="spinner" color="#FFF" size={100} />
       ) : (
         <>
           <div className="container-cards">
             {comics &&
-              comics.map((comic, index) => (
+              comics.map((comic:IComic, index:number) => (
                 <div
                   id={`card${comic.id}`}
                   className="card"
@@ -112,14 +130,14 @@ function ComicsList() {
                     setClassShowButton({ class: "mouseOver", index });
                   }}
                   onMouseOut={() => {
-                    setClassShowButton("");
+                    setClassShowButton({});
                   }}
                 >
                   <div
                     id={`overlay-container-options-card` + comic.id}
                     className={
-                      classShowButton.class && index === classShowButton.index
-                        ? classShowButton.class
+                      classShowButton?.class && index === classShowButton?.index
+                        ? classShowButton?.class
                         : "hide"
                     }
                   >
@@ -140,7 +158,7 @@ function ComicsList() {
                   </div>
                   <span>{comic.title}</span>
                   <img
-                    src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
+                    src={`${comic?.thumbnail?.path}.${comic?.thumbnail?.extension}`}
                     alt="ilustrative image of comic"
                   />
                 </div>

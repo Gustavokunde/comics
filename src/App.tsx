@@ -1,11 +1,8 @@
 import React from "react";
 import Routes from "./routes";
 import { BrowserRouter } from "react-router-dom";
-import CryptoJS from "crypto-js";
 
 function App() {
-
-
   const changeMode = () => {
     const theme = document.documentElement.getAttribute("data-theme");
     if(theme==='dark') document.documentElement.setAttribute("data-theme", "light");

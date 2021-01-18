@@ -1,7 +1,14 @@
-import React from "react";
+import React,{InputHTMLAttributes} from "react";
 import "../ModalInsertEmail/styles.scss";
 
-function ModalAlert({ message, closeModal }) {
+
+interface InputProps extends InputHTMLAttributes<HTMLInputElement>{
+  message?:string,
+  closeModal?:Function | any,
+}
+
+
+const ModalAlert : React.FC<InputProps> = ({ message, closeModal }) =>{
   return (
     <div className="overlay">
       <div className="container-modal">

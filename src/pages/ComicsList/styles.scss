@@ -8,12 +8,17 @@
   @media (max-width: 1200px) {
     padding: 10px;
   }
+  h1 {
+    color: var(--color-text);
+    text-align: center;
+  }
+
+  p{
+    color: var(--color-text);
+    text-align: center;
+  }
 }
 
-.container-list h1 {
-  color: var(--color-text);
-  text-align: center;
-}
 
 .container-cards {
   display: grid;
