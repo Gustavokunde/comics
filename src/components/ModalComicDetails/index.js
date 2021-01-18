@@ -14,7 +14,7 @@ function Modal({ comicDetails, closeModal }) {
   }, []);
 
   return (
-    <>
+    <> 
       {comicDetails.image && (
         <div className="overlay">
           <div className="container-modal-details">
@@ -33,8 +33,8 @@ function Modal({ comicDetails, closeModal }) {
                   comicDetails.creators.items.map(
                     (creator, index) =>
                       index < 15 && (
-                        <span>
-                          {creator.name} - {creator.role}
+                        <span key={creator.name}>
+                          {index} - {creator.role}
                         </span>
                       )
                   )}
@@ -45,7 +45,7 @@ function Modal({ comicDetails, closeModal }) {
                   comicDetails.prices.map(
                     (price, index) =>
                       index < 10 && (
-                        <span>
+                        <span key={index}>
                           {price.type === "printPrice"
                             ? "Preço de impressão"
                             : price.type === "digitalPrice"
