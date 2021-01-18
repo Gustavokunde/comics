@@ -26,10 +26,14 @@ const  ComicsList: React.FC = () => {
   const [alertMessage, setAlertMessage] = useState<string>("");
 
   const ts = new Date().getTime();
-  const publicKey = "a9c872e621bea639063b886de6f2a77a";
-  const privateKey = CryptoJS.MD5(
-    ts + "4f7fa7d20c0f3a139e6da96d2098a87a8e26647f" + publicKey
-  ).toString();
+  const publicKey = process.env.REACT_APP_PUBLIC_KEY;
+  let privateKey = '';
+  
+  if (process?.env?.REACT_APP_PRIVATE_KEY){
+    privateKey = CryptoJS.MD5(
+      ts + process?.env?.REACT_APP_PRIVATE_KEY + publicKey
+    ).toString();
+  }
   const [email, setEmail] = useState<boolean>(false);
 
   useEffect(() => {
