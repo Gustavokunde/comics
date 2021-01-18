@@ -1,25 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Routes from "./routes";
+import { BrowserRouter } from "react-router-dom";
+import CryptoJS from "crypto-js";
 
 function App() {
+
+
+  const changeMode = () => {
+    const theme = document.documentElement.getAttribute("data-theme");
+    if(theme==='dark') document.documentElement.setAttribute("data-theme", "light");
+    else document.documentElement.setAttribute("data-theme", "dark");
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div id="switch">
+        <span>Dark | Light mode</span>
+        <input id="toggle"type="checkbox" name="theme" onChange={changeMode} />
+        <label htmlFor="toggle">Toggle</label>
+      </div>
+      <Routes />
+    </BrowserRouter>
   );
 }
 
