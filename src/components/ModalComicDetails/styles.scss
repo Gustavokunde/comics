@@ -45,6 +45,7 @@
     margin-top: 20px;
     overflow-y: auto;
     align-items: center;
+    height: inherit;
     height: 90%;
 
     .image-detail {
@@ -67,7 +68,7 @@
       justify-content: center;
       width: 200px;
       margin: 10px;
-      margin-bottom: 30px;
+      margin-bottom: 50px;
       padding: 8px;
       position: relative;
     }
