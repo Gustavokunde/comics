@@ -1,11 +1,13 @@
 import React from "react";
-import '../ModalInsertEmail/styles.scss';
+import "../ModalInsertEmail/styles.scss";
 
 function ModalAlert({ message, closeModal }) {
   return (
-    <div>
-      <p>{message}</p>
-      <button onClick={closeModal}>OK</button>
+    <div className="overlay">
+      <div className="container-modal">
+        <p>{message}</p>
+        <button onClick={closeModal}>OK</button>
+      </div>
     </div>
   );
 }
