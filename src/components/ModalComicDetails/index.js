@@ -25,18 +25,30 @@ function Modal({ comicDetails, closeModal }) {
               />
             </div>
             <div className="details">
-            <AiOutlineClose size={20} onClick={closeModal}/>
+            <AiOutlineClose id="closeIcon" size={20} onClick={closeModal}/>
               <h2>{comicDetails.title}</h2>
               <h3>Criadores:</h3>
               <p>
               {comicDetails.creators &&
-                comicDetails.creators.items.map((creator) => (
+                comicDetails.creators.items.map((creator, index) => (
+                  index < 15 && 
                   <span>
                     {creator.name} - {creator.role}
                   </span>
                 ))}
-                </p>
+              </p>
+              <h3> Custos:</h3>
+              <p>
+              {comicDetails.prices &&
+                comicDetails.prices.map((price, index) => (
+                  index < 10 && 
+                  <span>
+                    {price.type ==='printPrice'?'Preço de impressão':price.type==='digitalPrice'? 'Preço de digitalização' : price.type} - {price.price.toLocaleString('en-us', { style: 'currency', currency: 'USD' })}
+                  </span>
+                ))}
+              </p>
             </div>
+          <button id="closeButton"onClick={closeModal}>FECHAR</button>
           </div>
         </div>
       )}

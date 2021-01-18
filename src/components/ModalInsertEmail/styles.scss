@@ -58,4 +58,8 @@
       background-color: indianred;
       margin: 5px;
   }
+
+  @media(max-width:800px){
+    width: 90%;
+  }
 }
