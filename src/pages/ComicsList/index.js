@@ -149,7 +149,6 @@ function ComicsList() {
           <div className="button">
             <button
               onClick={() => {
-                console.log(lovedComics.length, lovedComics)
                 if (lovedComics.length > 0) setEmail(true);
                 else
                   setAlertMessage(
