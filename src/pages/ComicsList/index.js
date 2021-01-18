@@ -5,8 +5,9 @@ import ModalComicDetails from "../../components/ModalComicDetails";
 import { FaSpinner } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 import ModalInsertEmail from "../../components/ModalInsertEmail";
-import Mask from'../../Icons/Mask';
+import Mask from "../../Icons/Mask";
 import "./styles.scss";
+import ModalAlert from "../../components/ModalAlert";
 
 function ComicsList() {
   const [comics, setComics] = useState([]);
@@ -14,6 +15,8 @@ function ComicsList() {
   const [classShowButton, setClassShowButton] = useState("");
   const [selectedComic, setSelectedComic] = useState({});
   const [loading, setLoading] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
+
   const ts = new Date().getTime();
   const publicKey = "a9c872e621bea639063b886de6f2a77a";
   const privateKey = CryptoJS.MD5(
@@ -55,9 +58,13 @@ function ComicsList() {
     setEmail(false);
   };
 
+  const closeModalAlert = () => {
+    setAlertMessage(false);
+  };
+
   const loveComic = (comic) => {
     const icon = document.getElementById("icon-love" + comic.id);
-      const card = document.getElementById("card" + comic.id);
+    const card = document.getElementById("card" + comic.id);
     const comicIsLoved = lovedComics.find((com) => comic.id === com.id);
 
     if (!comicIsLoved) {
@@ -71,6 +78,7 @@ function ComicsList() {
     }
   };
 
+
   return (
     <div className="container-list">
       <ModalComicDetails comicDetails={selectedComic} closeModal={closeModal} />
@@ -78,6 +86,12 @@ function ComicsList() {
         <ModalInsertEmail
           sendEmailData={lovedComics}
           closeModal={closeModalEmail}
+        />
+      )}
+      {alertMessage && (
+        <ModalAlert
+          message={alertMessage}
+          closeModal={closeModalAlert}
         />
       )}
       <h1>
@@ -102,7 +116,7 @@ function ComicsList() {
                   }}
                 >
                   <div
-                    id={`overlay-container-options-card`+comic.id}
+                    id={`overlay-container-options-card` + comic.id}
                     className={
                       classShowButton.class && index === classShowButton.index
                         ? classShowButton.class
@@ -111,11 +125,16 @@ function ComicsList() {
                   >
                     <Mask
                       id={`icon-love${comic.id}`}
-                      width="70px" height="70px"
+                      className="icon-love"
+                      width="70px"
+                      height="70px"
                       onClick={() => loveComic(comic)}
                     />
 
-                    <button id={`button-see-more${comic.id}`} onClick={() => showComicDetails(comic)}>
+                    <button
+                      id={`button-see-more${comic.id}`}
+                      onClick={() => showComicDetails(comic)}
+                    >
                       VER MAIS
                     </button>
                   </div>
@@ -130,10 +149,15 @@ function ComicsList() {
           <div className="button">
             <button
               onClick={() => {
-                setEmail(true);
+                console.log(lovedComics.length, lovedComics)
+                if (lovedComics.length > 0) setEmail(true);
+                else
+                  setAlertMessage(
+                    "Por favor, marque suas HQs preferidas antes."
+                  );
               }}
             >
-              <HiOutlineMail size={30}/>
+              <HiOutlineMail size={30} />
               Enviar preferidos por e-mail
             </button>
           </div>
