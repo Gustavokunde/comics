@@ -12,7 +12,7 @@ const ModalAlert : React.FC<InputProps> = ({ message, closeModal }) =>{
   return (
     <div className="overlay">
       <div className="container-modal">
-        <p>{message}</p>
+        <h2>{message}</h2>
         <button onClick={closeModal}>OK</button>
       </div>
     </div>
